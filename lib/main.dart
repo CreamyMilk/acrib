@@ -12,10 +12,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.lightBlue,
+        primarySwatch: Colors.amber,
       ),
       onGenerateRoute: RouteGenerator.generateRoute,
-      initialRoute: '/',
+      initialRoute: '/login',
       navigatorKey: navigatorKey,
     );
   }
