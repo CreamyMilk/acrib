@@ -8,7 +8,8 @@ class RouteGenerator {
     print(args);
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (ctx) => HomePage());
+        return MaterialPageRoute(
+            builder: (ctx) => SmallerTextFactor(HomePage()));
       default:
         return _errorRoute();
     }
@@ -25,5 +26,18 @@ class RouteGenerator {
         ),
       );
     });
+  }
+}
+
+class SmallerTextFactor extends StatelessWidget {
+  const SmallerTextFactor(this.child, {Key? key}) : super(key: key);
+  final Widget? child;
+  @override
+  Widget build(BuildContext context) {
+    final mediaQueryData = MediaQuery.of(context);
+    return MediaQuery(
+      child: child!,
+      data: mediaQueryData.copyWith(textScaleFactor: 1.0),
+    );
   }
 }
