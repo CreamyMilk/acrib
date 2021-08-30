@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    // Getting arguments passed in while calling Navigator.pushNamed
     final args = settings.arguments;
-    print(args);
+    if (args != null) {
+      print(args);
+    }
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(

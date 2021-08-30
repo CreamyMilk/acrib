@@ -17,13 +17,14 @@ class LoginPage extends StatelessWidget {
 
     void submitLogin() {
       if (_formKey.currentState!.validate()) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text("Sending Api Data")));
+        Navigator.of(context).pushNamed("/");
       }
     }
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
+        systemNavigationBarIconBrightness: Brightness.dark,
+        statusBarIconBrightness: Brightness.dark,
         statusBarBrightness: Brightness.light,
         statusBarColor: Colors.white,
       ),
@@ -68,9 +69,10 @@ class LoginPage extends StatelessWidget {
                     key: _formKey,
                     child: TextFormField(
                       keyboardType: TextInputType.number,
+                      maxLength: 10,
                       decoration: const InputDecoration(
                           border: OutlineInputBorder(),
-                          hintText: '07xxxxx',
+                          hintText: '07xxxx',
                           labelText: "Phone Number"),
                       controller: phoneController,
                       validator: isValidPhone,
