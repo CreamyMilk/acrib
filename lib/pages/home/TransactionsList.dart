@@ -42,7 +42,7 @@ class TransactionList extends StatelessWidget {
             leading: CircleAvatar(
               backgroundColor: Colors.green[50],
               child: Icon(
-                Icons.restaurant,
+                Icons.water_rounded,
                 size: 17,
                 color: Colors.greenAccent[400],
               ),

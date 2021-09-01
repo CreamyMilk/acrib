@@ -1,5 +1,6 @@
 import 'package:acrib/pages/home/homePage.dart';
 import 'package:acrib/pages/login/loginPage.dart';
+import 'package:acrib/pages/wallets/walletsPage.dart';
 import 'package:flutter/material.dart';
 
 class RouteGenerator {
@@ -12,6 +13,9 @@ class RouteGenerator {
       case '/':
         return MaterialPageRoute(
             builder: (ctx) => SmallerTextFactor(HomePage()));
+      case '/wallet':
+        return MaterialPageRoute(
+            builder: (ctx) => SmallerTextFactor(WalletsPage()));
       case '/login':
         return MaterialPageRoute(builder: (ctx) => LoginPage());
       default:

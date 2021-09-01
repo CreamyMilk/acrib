@@ -3,7 +3,16 @@ import 'package:flutter/material.dart';
 
 class SimpleCard extends StatelessWidget {
   final Color? cardColor;
-  const SimpleCard({Key? key, @required this.cardColor}) : super(key: key);
+  const SimpleCard(
+      {Key? key,
+      required this.cardColor,
+      required this.cardTitle,
+      required this.cardActionText,
+      required this.cardAmount})
+      : super(key: key);
+  final String cardTitle;
+  final String cardActionText;
+  final String cardAmount;
   @override
   Widget build(BuildContext context) {
     final List<String> dues = <String>['Jan.2020', 'Feb.2020', 'March.2020'];
@@ -23,7 +32,7 @@ class SimpleCard extends StatelessWidget {
             items: dues.map((String item) {
               return DropdownMenuItem<String>(
                 child: Text(
-                  "Lost $item",
+                  "$item",
                   style: TextStyle(
                     color: Colors.black,
                   ),
@@ -36,7 +45,7 @@ class SimpleCard extends StatelessWidget {
             },
             value: selectedItem,
             icon: Padding(
-              padding: EdgeInsets.only(left: 10, right: 10, bottom: 30),
+              padding: EdgeInsets.only(bottom: 30),
               child: Icon(
                 Icons.arrow_forward_ios_outlined,
                 size: 15,
@@ -53,15 +62,15 @@ class SimpleCard extends StatelessWidget {
           TextSpan(
               text: "\ksh.",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400)),
-          TextSpan(text: "50,000", style: TextStyle(fontSize: 25)),
+          TextSpan(text: cardAmount, style: TextStyle(fontSize: 25)),
         ],
       ),
     );
     Text actionText = Text(
-      "View Receipts",
+      cardActionText,
       style: TextStyle(
         color: Colors.white,
-        fontSize: 18,
+        fontSize: 13,
         decoration: TextDecoration.underline,
       ),
     );
@@ -79,7 +88,7 @@ class SimpleCard extends StatelessWidget {
           cardDropDownTitle,
           const YMargin(5),
           Text(
-            "Rent Due",
+            cardTitle,
             style: TextStyle(
               color: Colors.white,
               fontSize: 15,
