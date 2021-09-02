@@ -45,7 +45,7 @@ class SimpleCard extends StatelessWidget {
             },
             value: selectedItem,
             icon: Padding(
-              padding: EdgeInsets.only(bottom: 30),
+              padding: EdgeInsets.only(bottom: 30, right: 5),
               child: Icon(
                 Icons.arrow_forward_ios_outlined,
                 size: 15,
@@ -76,8 +76,8 @@ class SimpleCard extends StatelessWidget {
     );
     return Container(
       margin:
-          const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0, bottom: 8.0),
-      width: 300,
+          const EdgeInsets.only(left: 0.0, right: 16.0, top: 8.0, bottom: 8.0),
+      width: 200,
       decoration: BoxDecoration(
         color: cardColor,
         borderRadius: BorderRadius.circular(2),

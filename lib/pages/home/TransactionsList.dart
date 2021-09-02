@@ -36,7 +36,7 @@ class TransactionList extends StatelessWidget {
         separatorBuilder: (_, __) {
           return Container();
         },
-        itemCount: 10,
+        itemCount: 5,
         itemBuilder: (ctx, idx) {
           return ExpansionTile(
             leading: CircleAvatar(

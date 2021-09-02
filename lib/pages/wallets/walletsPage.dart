@@ -1,3 +1,4 @@
+import 'package:acrib/pages/wallets/addMoneyBottomSheet.dart';
 import 'package:acrib/utils/sizedMargins.dart';
 import 'package:flutter/material.dart';
 
@@ -29,14 +30,17 @@ class WalletActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(0.0),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SingleWalletAction(
-                actionIcon: Icons.save_alt_sharp, actionName: "Add\n Money"),
+              actionIcon: Icons.save_alt_sharp,
+              actionName: "Add\n Money",
+              pressedHook: () => {showPaymentSheet(context)},
+            ),
             SingleWalletAction(
                 actionIcon: Icons.bolt, actionName: "Buy\nTokens"),
             SingleWalletAction(
@@ -53,34 +57,43 @@ class WalletActions extends StatelessWidget {
 
 class SingleWalletAction extends StatelessWidget {
   const SingleWalletAction(
-      {Key? key, @required this.actionIcon, required this.actionName})
+      {Key? key,
+      required this.actionIcon,
+      required this.actionName,
+      this.pressedHook})
       : super(key: key);
   final IconData? actionIcon;
   final String actionName;
+  final Function? pressedHook;
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 100,
-      width: 100,
-      child: Column(
-        children: [
-          CircleAvatar(
-            backgroundColor: Colors.green[50],
-            radius: 25,
-            child: Icon(
-              actionIcon,
-              size: 20,
-              color: Colors.greenAccent[400],
+    return GestureDetector(
+      onTap: (){
+        pressedHook!();
+      },
+      child: SizedBox(
+        height: 100,
+        width: 100,
+        child: Column(
+          children: [
+            CircleAvatar(
+              backgroundColor: Colors.green[50],
+              radius: 22,
+              child: Icon(
+                actionIcon,
+                size: 20,
+                color: Colors.greenAccent[400],
+              ),
             ),
-          ),
-          const YMargin(10),
-          Text(actionName,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.w400,
-              ))
-        ],
+            const YMargin(10),
+            Text(actionName,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                ))
+          ],
+        ),
       ),
     );
   }

@@ -26,9 +26,7 @@ class HomePage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const XMargin(10),
             CardsView(),
-            const XMargin(10),
             const YMargin(10),
             Padding(
               padding: const EdgeInsets.only(left: 8.0),
@@ -36,12 +34,12 @@ class HomePage extends StatelessWidget {
             ),
             const YMargin(10),
             Center(child: WalletActions()),
-            const YMargin(10),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: TodoListHeader(),
-            ),
-            SizedBox(height: 180, child: TodoList()),
+            // const YMargin(10),
+            // Padding(
+            //   padding: const EdgeInsets.only(left: 8.0),
+            //   child: TodoListHeader(),
+            // ),
+            // SizedBox(height: 180, child: TodoList()),
             const YMargin(10),
             Padding(
               padding: const EdgeInsets.only(right: 8.0),
@@ -93,27 +91,28 @@ class _CardsViewState extends State<CardsView> {
     return SizedBox(
       height: 180,
       child: PageView.builder(
-          allowImplicitScrolling: true,
-          onPageChanged: (int pageNumber) {
-            print("The current page number is $pageNumber");
-          },
-          controller: _simpleCardsController,
-          physics: BouncingScrollPhysics(),
-          scrollDirection: Axis.horizontal,
-          itemCount: simpleCardsArray.length,
-          itemBuilder: (ctx, idx) {
-            return GestureDetector(
-              onDoubleTap: () {
-                _simpleCardsController.animateToPage(
-                  idx,
-                  duration: Duration(seconds: 1),
-                  curve: Curves.decelerate,
-                );
-                print("You double tapped the card so autonavigation $idx");
-              },
-              child: simpleCardsArray[idx],
-            );
-          }),
+        allowImplicitScrolling: true,
+        onPageChanged: (int pageNumber) {
+          print("The current page number is $pageNumber");
+        },
+        controller: _simpleCardsController,
+        physics: BouncingScrollPhysics(),
+        scrollDirection: Axis.horizontal,
+        itemCount: simpleCardsArray.length,
+        itemBuilder: (ctx, idx) {
+          return GestureDetector(
+            onDoubleTap: () {
+              _simpleCardsController.animateToPage(
+                idx,
+                duration: Duration(seconds: 1),
+                curve: Curves.decelerate,
+              );
+              print("You double tapped the card so autonavigation $idx");
+            },
+            child: simpleCardsArray[idx],
+          );
+        },
+      ),
     );
   }
 }

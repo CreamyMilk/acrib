@@ -6,7 +6,7 @@ class Constants {
 
   static const String FullnameStore = "name";
   static const String PhoneNumberStore = "phonenumber";
-  static const String WalletNameStore = "walletname";
+  static const String WalletIDStore = "walletname";
   static const String BalanceStore = "balance";
   static const String TransactionsStore = "transaction";
   static const String RoleStore = "role";

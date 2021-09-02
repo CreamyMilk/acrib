@@ -9,9 +9,9 @@ class TodoListHeader extends StatelessWidget {
     return Row(
       children: [
         Text(
-          "Reminders",
+          "Actions",
           style: TextStyle(
-              fontSize: 15, color: Colors.black, fontWeight: FontWeight.w400),
+              fontSize: 15, color: Colors.black, fontWeight: FontWeight.w300),
         ),
         Spacer(),
       ],
