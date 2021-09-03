@@ -1,4 +1,4 @@
-import 'package:acrib/constants.dart';
+import 'package:acrib/pages/wallets/DepositFuture.dart';
 import 'package:acrib/utils/sizedMargins.dart';
 import 'package:acrib/utils/typeExtensions.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,7 +23,9 @@ String? validateAmount(String value) {
     if (value[0] != "0") {
       return "A Maximum limit of Ksh 1,000,000 is allowed.";
     }
-    return null;
+    if (int.tryParse(value) == null) {
+      return "The Supplied Amount is invalid";
+    }
   }
   return null;
 }
@@ -46,13 +48,13 @@ class PaymentBottomSheet extends StatefulWidget {
 class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
   final TextEditingController _phoneficontroller = TextEditingController();
   final TextEditingController _amountficontroller = TextEditingController();
-  String mobile = "0797678252";
-  String amountDue = "1000";
-  String walletName = "";
+  late String mobile = "0797678252";
+  String depositAmount = "1000";
+  late String walletName;
   @override
   void initState() {
-    mobile = "07";
-    walletName = "d";
+    mobile = "0797678252";
+    walletName = "ce36ddf9-426f-4736-8037-550aed8c28ed";
     super.initState();
   }
 
@@ -61,10 +63,10 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
     var sheetTitle = Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Icon(Icons.add,size:15),
+        Icon(Icons.add, size: 17),
         Text(
           "Wallet Deposit",
-          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
+          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17),
         ),
         SizedBox()
       ],
@@ -86,7 +88,7 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                amountDue.addCommas,
+                depositAmount.addCommas,
                 style: TextStyle(
                   fontWeight: FontWeight.w300,
                   fontSize: 20,
@@ -121,7 +123,7 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
       onChanged: (value) {
         print(value);
         setState(() {
-          amountDue = value;
+          depositAmount = value;
         });
       },
       controller: _amountficontroller,
@@ -133,7 +135,7 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
         errorText: validateAmount(_amountficontroller.text),
         prefixText: "",
       ),
-      keyboardType: TextInputType.numberWithOptions(),
+      keyboardType: TextInputType.number,
     );
     Text lowCashText = Text(
       "Running low on Cash ?",
@@ -149,7 +151,7 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
         });
       },
       controller: _phoneficontroller,
-      maxLength:10,
+      maxLength: 10,
       decoration: InputDecoration(
         isDense: false,
         border: OutlineInputBorder(gapPadding: 0.2),
@@ -157,19 +159,27 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
         errorText: validatePhone(_phoneficontroller.text),
         prefixText: "",
       ),
-      keyboardType: TextInputType.numberWithOptions(),
+      keyboardType: TextInputType.number,
     );
     Container sendButton = Container(
       child: MaterialButton(
+        elevation: 0,
         height: 60,
         minWidth: MediaQuery.of(context).size.width * .95,
         onPressed: () async {
+          sendDepositRequest(
+            DepositStruct(
+              amount: int.parse(depositAmount),
+              walletID: walletName,
+              phoneNumber: mobile,
+            ),
+          );
           Navigator.of(context).pop();
           print("send");
         },
         color: Colors.greenAccent[400],
         child: Text(
-          "Deposit ${amountDue.addCommas}",
+          "Deposit ${depositAmount.addCommas}",
           style: TextStyle(fontSize: 17, color: Colors.white),
         ),
         autofocus: true,
@@ -190,7 +200,7 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
               amountColumnText,
               const YMargin(20),
               amountTextFieldArea,
-              const YMargin(15),
+              const YMargin(20),
               Align(
                 alignment: Alignment.centerLeft,
                 child: lowCashText,
@@ -201,7 +211,7 @@ class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
                 alignment: Alignment.bottomCenter,
                 child: sendButton,
               ),
-              const YMargin(5),
+              const YMargin(20),
             ],
           ),
         ),
