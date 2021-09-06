@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:acrib/main.dart';
+import 'package:acrib/pages/login/loginFuture.dart';
 import 'package:acrib/utils/sizedMargins.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,20 +16,26 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool hasBiometrics = true;
+  bool hasBiometrics = false;
   bool isFirstTimeLogin = false;
   bool userWantsBiometrics = true;
   @override
   void initState() {
-    final LocalAuthentication lauth = LocalAuthentication();
-    lauth.isDeviceSupported().then(
-          (deviceSupports) => {
-            setState(() => {
-                  hasBiometrics = ((deviceSupports && !isFirstTimeLogin) &&
-                      userWantsBiometrics),
-                })
-          },
-        );
+    if (Platform.isAndroid) {
+      print("Checking if the user has biometrics stuff");
+      final LocalAuthentication lauth = LocalAuthentication();
+      lauth
+          .isDeviceSupported()
+          .then((deviceSupports) => {
+                setState(() => {
+                      hasBiometrics = deviceSupports &&
+                          ((!isFirstTimeLogin) && userWantsBiometrics)
+                    })
+              })
+          .onError((error, stackTrace) => {
+                setState(() => {hasBiometrics = false})
+              });
+    }
     super.initState();
   }
 
@@ -40,9 +49,9 @@ class _LoginPageState extends State<LoginPage> {
       return (s.length < 10) ? "Enter A Valid Phonenumber" : null;
     }
 
-    void submitLogin() {
+    void submitLogin() async {
       if (_formKey.currentState!.validate()) {
-        Navigator.of(context).pushNamed("/");
+        await sendLoginRequest(LoginStruct(phoneNumber: phoneController.text));
       }
     }
 
@@ -108,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       hasBiometrics
                           ? IconButton(
-                              iconSize: 25,
+                              iconSize: 30,
                               onPressed: () {
                                 localAuthenticate();
                               },
