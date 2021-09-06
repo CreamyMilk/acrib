@@ -1,3 +1,4 @@
+import 'package:acrib/constants.dart';
 import 'package:acrib/pages/wallets/DepositFuture.dart';
 import 'package:acrib/utils/sizedMargins.dart';
 import 'package:acrib/utils/typeExtensions.dart';
@@ -48,13 +49,15 @@ class PaymentBottomSheet extends StatefulWidget {
 class _PaymentBottomSheetState extends State<PaymentBottomSheet> {
   final TextEditingController _phoneficontroller = TextEditingController();
   final TextEditingController _amountficontroller = TextEditingController();
-  late String mobile = "0797678252";
-  String depositAmount = "1000";
+  late String mobile;
+  late String depositAmount;
   late String walletName;
+
   @override
   void initState() {
-    mobile = "0797678252";
-    walletName = "ce36ddf9-426f-4736-8037-550aed8c28ed";
+    mobile = Constants.getPhone();
+    walletName = Constants.getWalletID();
+    depositAmount = "100";
     super.initState();
   }
 

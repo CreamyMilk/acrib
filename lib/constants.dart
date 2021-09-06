@@ -1,3 +1,6 @@
+import 'package:hive/hive.dart';
+import 'package:acrib/utils/typeExtensions.dart';
+
 class Constants {
   static const String API_BASE = "http://192.168.0.24:1337";
   static const String UserBoxName = "user";
@@ -13,4 +16,32 @@ class Constants {
   static const String RawFCMTokenStore = "rawfcmtoken";
   static const String NotifcationTopicStore = "notificationTopic";
   static const String AllUserNotifcationTopic = "all";
+
+  static String getWalletID() {
+    Box box = Hive.box(UserBoxName);
+    String wid = box.get(WalletIDStore, defaultValue: "");
+    if (wid == "") {
+      print("You Need to login bro");
+    }
+    return wid;
+  }
+
+  static String getPhone() {
+    Box box = Hive.box(UserBoxName);
+    String phone = box.get(PhoneNumberStore, defaultValue: "");
+    if (phone == "") {
+      print("You have no stored phoneNumber meed to login bro");
+    }
+    return phone;
+  }
+
+  static String getWalletBalance() {
+    Box box = Hive.box(UserBoxName);
+    String balance = box.get(WalletBalanceStore, defaultValue: "");
+    if (balance == "") {
+      print("You don't have any walletBalance");
+      return "N/A";
+    }
+    return balance.addCommas;
+  }
 }

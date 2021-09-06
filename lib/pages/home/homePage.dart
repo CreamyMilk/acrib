@@ -81,12 +81,7 @@ class _CardsViewState extends State<CardsView> {
         cardActionText: "View Receipts",
         cardAmount: "75,340",
       ),
-      SimpleCard(
-        cardColor: Colors.tealAccent[400],
-        cardTitle: "Wallet",
-        cardActionText: "View Transactions",
-        cardAmount: "5,773",
-      ),
+      WalletCard(),
     ];
     return SizedBox(
       height: 180,
