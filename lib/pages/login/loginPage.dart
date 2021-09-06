@@ -1,9 +1,34 @@
+import 'package:acrib/main.dart';
 import 'package:acrib/utils/sizedMargins.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:local_auth/auth_strings.dart';
+import 'package:local_auth/local_auth.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
+
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  bool hasBiometrics = true;
+  bool isFirstTimeLogin = false;
+  bool userWantsBiometrics = true;
+  @override
+  void initState() {
+    final LocalAuthentication lauth = LocalAuthentication();
+    lauth.isDeviceSupported().then(
+          (deviceSupports) => {
+            setState(() => {
+                  hasBiometrics = ((deviceSupports && !isFirstTimeLogin) &&
+                      userWantsBiometrics),
+                })
+          },
+        );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,13 +104,23 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                   const YMargin(60),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: MaterialButton(
-                        elevation: 0,
-                        color: Colors.amber[300],
-                        child: Text("Login"),
-                        onPressed: submitLogin),
+                  Row(
+                    children: [
+                      hasBiometrics
+                          ? IconButton(
+                              iconSize: 25,
+                              onPressed: () {
+                                localAuthenticate();
+                              },
+                              icon: Icon(Icons.fingerprint_outlined))
+                          : SizedBox(),
+                      Spacer(),
+                      MaterialButton(
+                          elevation: 0,
+                          color: Colors.amber[300],
+                          child: Text("Login"),
+                          onPressed: submitLogin),
+                    ],
                   ),
                 ],
               ),
@@ -94,5 +129,28 @@ class LoginPage extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+Future<void> localAuthenticate() async {
+  final LocalAuthentication lauth = LocalAuthentication();
+  bool authenticated = false;
+
+  try {
+    authenticated = await lauth.authenticate(
+        localizedReason: 'Scan your fingerprint to authenticate',
+        useErrorDialogs: true,
+        androidAuthStrings: AndroidAuthMessages(
+          signInTitle: "Biometrics Required",
+          biometricHint: "Verify identity",
+          biometricSuccess: "Login was successful",
+        ),
+        stickyAuth: true);
+  } on PlatformException catch (e) {
+    print(e);
+    return;
+  }
+  if (authenticated) {
+    Navigator.of(navigatorKey.currentContext!).pushNamed("/");
   }
 }
