@@ -39,6 +39,11 @@ class TransactionList extends StatelessWidget {
         itemCount: 5,
         itemBuilder: (ctx, idx) {
           return ExpansionTile(
+            children: [
+              Row(children: [
+                MaterialButton(onPressed: () {}, child: Text("Receipt")),
+              ]),
+            ],
             leading: CircleAvatar(
               backgroundColor: Colors.green[50],
               child: Icon(

@@ -35,6 +35,17 @@ class Constants {
     return phone;
   }
 
+  static bool hasStoredCreds() {
+    Box box = Hive.box(UserBoxName);
+    String tid = box.get(TenantIDStore, defaultValue: "");
+    String wid = box.get(WalletIDStore, defaultValue: "");
+    if (tid == "" && wid == "") {
+      print("You dont have any store creds so login first");
+      return false;
+    }
+    return true;
+  }
+
   static String getWalletBalance() {
     Box box = Hive.box(UserBoxName);
     String balance = box.get(WalletBalanceStore, defaultValue: "");
@@ -43,5 +54,17 @@ class Constants {
       return "N/A";
     }
     return balance.addCommas;
+  }
+
+  //Must zero out all keys
+  static Future<bool> logout() async {
+    try {
+      int clearINT = await Hive.box(UserBoxName).clear();
+      print("[LOGOUT INT] $clearINT");
+      return true;
+    } catch (err) {
+      print("[LOGOUT ERROR] $err");
+      return false;
+    }
   }
 }

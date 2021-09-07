@@ -159,17 +159,17 @@ class WalletCard extends StatelessWidget {
     Widget amountDueText = ValueListenableBuilder(
       valueListenable: Hive.box(Constants.UserBoxName).listenable(),
       builder: (context, Box<dynamic> box, widget) {
-        String b = box.get(Constants.WalletIDStore, defaultValue: "");
+        String b = box.get(Constants.WalletBalanceStore, defaultValue: "");
         String balance = "N/A";
-        if (b == "") {
+        if (b != "") {
           balance = b.addCommas;
         }
         return RichText(
           text: TextSpan(
             children: [
               TextSpan(
-                text: "\ksh.",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
+                text: "ksh.",
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
               ),
               TextSpan(
                 text: balance,
@@ -200,12 +200,12 @@ class WalletCard extends StatelessWidget {
         children: [
           const YMargin(10),
           cardDropDownTitle,
-          const YMargin(5),
+          const YMargin(10),
           Text(
-            "Wallet Info",
+            "Wallet Balance",
             style: TextStyle(
               color: Colors.white,
-              fontSize: 15,
+              fontSize: 13,
             ),
           ),
           const YMargin(5),

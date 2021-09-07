@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:acrib/constants.dart';
 import 'package:acrib/main.dart';
 import 'package:acrib/pages/login/loginFuture.dart';
 import 'package:acrib/utils/sizedMargins.dart';
@@ -21,7 +22,7 @@ class _LoginPageState extends State<LoginPage> {
   bool userWantsBiometrics = true;
   @override
   void initState() {
-    if (Platform.isAndroid) {
+    if (Platform.isAndroid && Constants.hasStoredCreds()) {
       print("Checking if the user has biometrics stuff");
       final LocalAuthentication lauth = LocalAuthentication();
       lauth
@@ -34,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
               })
           .onError((error, stackTrace) => {
                 setState(() => {hasBiometrics = false})
-              });
+              },);
     }
     super.initState();
   }
