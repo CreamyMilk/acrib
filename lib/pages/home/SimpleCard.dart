@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:acrib/constants.dart';
 import 'package:acrib/utils/sizedMargins.dart';
 import 'package:flutter/material.dart';
@@ -188,32 +190,35 @@ class WalletCard extends StatelessWidget {
         decoration: TextDecoration.underline,
       ),
     );
-    return Container(
-      margin:
-          const EdgeInsets.only(left: 0.0, right: 16.0, top: 8.0, bottom: 8.0),
-      width: 200,
-      decoration: BoxDecoration(
-        color: Colors.greenAccent[400],
-        borderRadius: BorderRadius.circular(2),
-      ),
-      child: Column(
-        children: [
-          const YMargin(10),
-          cardDropDownTitle,
-          const YMargin(10),
-          Text(
-            "Wallet Balance",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 13,
+    return BackdropFilter(
+      filter: new ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+      child: Container(
+        margin: const EdgeInsets.only(
+            left: 0.0, right: 16.0, top: 8.0, bottom: 8.0),
+        width: 200,
+        decoration: BoxDecoration(
+          color: Colors.grey.shade200.withOpacity(0.5),
+          borderRadius: BorderRadius.circular(2),
+        ),
+        child: Column(
+          children: [
+            const YMargin(10),
+            cardDropDownTitle,
+            const YMargin(10),
+            Text(
+              "Wallet Balance",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 13,
+              ),
             ),
-          ),
-          const YMargin(5),
-          amountDueText,
-          Spacer(),
-          actionText,
-          const YMargin(10)
-        ],
+            const YMargin(5),
+            amountDueText,
+            Spacer(),
+            actionText,
+            const YMargin(10)
+          ],
+        ),
       ),
     );
   }

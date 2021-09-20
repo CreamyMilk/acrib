@@ -13,6 +13,8 @@ class Constants {
   static const String ProfilePhotoStore = "profilepicurl";
   static const String WalletBalanceStore = "visualBalance";
 
+  static const String TransactionsListStore= "pastTransaction";
+
   static const String RawFCMTokenStore = "rawfcmtoken";
   static const String NotifcationTopicStore = "notificationTopic";
   static const String AllUserNotifcationTopic = "all";

@@ -24,6 +24,13 @@ Future sendLoginRequest(LoginStruct loginCreds) async {
         "phone": loginCreds.phoneNumber,
       }),
     );
+    //Clear Cache
+    bool cleard = await Constants.logout();
+    if (cleard) {
+      print("Cleared Cached Details");
+    } else {
+      print("Error clearing cache");
+    }
     Map<String, dynamic> myjson = json.decode(response.body);
     if (myjson["status"] != null && myjson["status"] == 0) {
       LoginResponse resp = LoginResponse.fromJson(myjson);
